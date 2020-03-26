@@ -1,0 +1,22 @@
+{
+  "name": "youtube-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webenot/youtube-clone.git"
+  },
+  "author": "webenot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webenot/youtube-clone/issues"
+  },
+  "homepage": "https://github.com/webenot/youtube-clone#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
