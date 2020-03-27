@@ -1,7 +1,7 @@
 import express from 'express';
 
+import { changePassword, editProfile, home, userDetail } from '../controllers/userController';
 import routes from '../routes';
-import { changePassword, editProfile, home, userDetail } from "../controllers/userController";
 
 const userRouter = express.Router();
 
