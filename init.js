@@ -1,7 +1,11 @@
 import app from './app';
+import './db';
 
-const PORT = 4000;
+import dotenv from 'dotenv';
+dotenv.config();
 
-const handleListening = () => console.log(`Listening on: http://localhost:${PORT}`);
+const PORT = process.env.PORT || 4000;
+
+const handleListening = () => console.log(`✔ Listening on: http://localhost:${process.env.PORT}`);
 
 app.listen(PORT, handleListening);

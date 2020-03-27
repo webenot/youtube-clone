@@ -1,12 +1,13 @@
 import routes from '../routes';
-import { videos } from '../db';
 
 export const home = (req, res) => {
+  const videos = [];
   res.render('home', { pageTitle: 'Home', videos });
 };
 
 export const search = (req, res) => {
   const { query: { term: searchingBy } } = req;
+  const videos = [];
   res.render('search', { pageTitle: 'Search', searchingBy, videos });
 };
 
