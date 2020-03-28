@@ -25,14 +25,16 @@ const routes = {
   logout: LOGOUT,
   search: SEARCH,
   users: USERS,
-  userDetail: (id) => id ? `${USERS}/${id}` : USER_DETAIL,
+  userDetail: (id) => (id ? `${USERS}/${id}` : USER_DETAIL),
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   videos: VIDEOS,
   upload: UPLOAD,
-  videoDetail: (id) => id ? `${VIDEOS}/${id}` : VIDEO_DETAIL,
-  editVideo: (id) => id ? `${VIDEOS}${EDIT_VIDEO.replace(':id', id)}` : EDIT_VIDEO,
-  deleteVideo: (id) => id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO,
+  videoDetail: (id) => (id ? `${VIDEOS}/${id}` : VIDEO_DETAIL),
+  editVideo: (id) =>
+    id ? `${VIDEOS}${EDIT_VIDEO.replace(':id', id)}` : EDIT_VIDEO,
+  deleteVideo: (id) =>
+    id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO,
 };
 
 export default routes;

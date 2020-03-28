@@ -10,11 +10,12 @@ const multerVideo = multer({
       cb(null, 'uploads/videos');
     },
     filename: (req, file, cb) => {
-      let customFileName = crypto.randomBytes(18).toString('hex'),
-        fileExtension = path.parse(file.originalname).ext; // get file extension from original file name
+      const customFileName = crypto.randomBytes(18).toString('hex');
+      // get file extension from original file name
+      const fileExtension = path.parse(file.originalname).ext;
       cb(null, customFileName + fileExtension);
-    }
-  })
+    },
+  }),
 });
 
 export const localsMiddleware = (req, res, next) => {
@@ -22,7 +23,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = 'WeTube';
   res.locals.user = {
     isAuthenticated: true,
-    id: 1
+    id: 1,
   };
   next();
 };
