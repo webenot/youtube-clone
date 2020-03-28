@@ -17,20 +17,29 @@ export const search = async (req, res) => {
   const {
     query: { term: searchingBy },
   } = req;
+  const searchString = searchingBy.split(' ');
   try {
-    const videos = await Video.find({
+    const where = {
       $or: [
         {
           title: {
-            $regex: new RegExp(`(${searchingBy.split(' ').join(')(')})`),
+            $regex: new RegExp(
+              `(${searchString.join(')|(')})|(${searchingBy})`,
+              'i'
+            ),
           },
+        },
+        {
           description: {
-            $regex: new RegExp(`(${searchingBy.split(' ').join(')(')})`),
+            $regex: new RegExp(
+              `(${searchString.join(')|(')})|(${searchingBy})`,
+              'i'
+            ),
           },
         },
       ],
-    }).sort({ _id: -1 });
-    console.log(videos);
+    };
+    const videos = await Video.find(where).sort({ _id: -1 });
     res.render('search', { pageTitle: 'Search', searchingBy, videos });
   } catch (e) {
     console.error(e);
