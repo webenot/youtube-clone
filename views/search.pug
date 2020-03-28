@@ -4,6 +4,9 @@ block content
   .search__header
     h3 Searching for: "#{searchingBy}"
   .search__videos
-    each video in videos
-      .videos__video-block
-        +videoBlock(video)
+    if videos.length
+      each video in videos
+        .videos__video-block
+          +videoBlock(video)
+    else
+      h4 No videos found
