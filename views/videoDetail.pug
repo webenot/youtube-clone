@@ -1,3 +1,12 @@
 extends layouts/main
+include mixins/videoBlock
 block content
-  p Video detail
+  .video__player
+    video(src='/' + video.fileUrl, controls="true")
+  .video__info
+    if user.isAuthenticated
+      a(href=routes.editVideo(video.id)) Edit video
+    h5.video__title= video.title
+    span.video__views= video.views
+    p.video__description= video.description
+

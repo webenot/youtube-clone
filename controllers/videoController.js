@@ -22,17 +22,37 @@ export const getUpload = (req, res) => {
   res.render('upload', { pageTitle: 'Upload' });
 };
 
-export const postUpload = (req, res) => {
+export const postUpload = async(req, res) => {
   console.log(req.body);
   console.log(req.file);
   const {
-    body: { file, title, description }
+    body: { title, description },
+    file: { path }
   } = req;
-  // @todo Upload and save video
-  res.redirect(routes.videoDetail(1234));
+
+  try {
+    const newVideo = await Video.create({
+      fileUrl: path.replace(/\\/g, '/'),
+      title,
+      description
+    });
+    res.redirect(routes.videoDetail(newVideo.id));
+  } catch (e) {
+    console.error(e);
+    res.render('upload', { pageTitle: 'Upload' });
+  }
 };
 
-export const videoDetail = (req, res) => res.render('videoDetail', { pageTitle: 'Video Detail' });
+export const videoDetail = async(req, res) => {
+  const { params: { id } } = req;
+  try {
+    const video = await Video.findById(id);
+    res.render('videoDetail', { pageTitle: 'Video Detail', video });
+  } catch (e) {
+    console.error(e);
+    res.render('videoDetail', { pageTitle: 'Video Detail', video: {} });
+  }
+};
 
 export const editVideo = (req, res) => {
   const { params: { id: videoId } } = req;

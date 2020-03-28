@@ -1,9 +1,9 @@
 extends layouts/main
 block content
   .form-container
-    form(action=routes.users + routes.editProfile, method="post")
+    form(action=routes.users + routes.editProfile, method="post", enctype="multipart/form-data")
       label(for="avatar") Avatar
-      input#avatar(type="file", name="avatar")
+      input#avatar(type="file", name="avatar", accept="image/*")
       input(type="text", name="name", placeholder="Full Name")
       input(type="email", name="email", placeholder="Email")
       input(type="submit", value="Update Profile")

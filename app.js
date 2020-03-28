@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(helmet());
 
 app.use(localsMiddleware);
+app.use('/uploads', express.static('uploads'));
 
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
