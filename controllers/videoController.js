@@ -1,8 +1,15 @@
 import routes from '../routes';
+import Video from '../models/Video';
 
-export const home = (req, res) => {
-  const videos = [];
-  res.render('home', { pageTitle: 'Home', videos });
+export const home = async(req, res) => {
+  try {
+    const videos = await Video.find({});
+    console.log(videos);
+    res.render('home', { pageTitle: 'Home', videos });
+  } catch (e) {
+    console.error(e);
+    res.render('home', { pageTitle: 'Home', videos: [] });
+  }
 };
 
 export const search = (req, res) => {
