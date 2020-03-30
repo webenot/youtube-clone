@@ -28,6 +28,20 @@ input:not([type="file"]), button, textarea
     font-weight: 300
     color: rgba(0, 0, 0, .5)
 
+.fileUpload
+  background-color: white
+  +border-radius(5px)
+  padding: .75rem
+  @include box-shadow($input-shadow)
+  label
+    font-weight: 300
+    margin-right: .75rem
+  input
+    display: inline
+    max-width: unset
+    width: unset
+    font-size: .75rem
+
 button, input[type="submit"]
   border: none
   cursor: pointer

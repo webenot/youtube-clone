@@ -10,11 +10,11 @@
     width: 100%
     margin-bottom: 3rem
     max-width: $form-width
-    input
+    input:not([type="file"])
       display: block
       width: 100%
       &:not(:last-child)
         margin-bottom: 1rem
-    textarea
+    textarea, .fileUpload
       &:not(:last-child)
         margin-bottom: 1rem
