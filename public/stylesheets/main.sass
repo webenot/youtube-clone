@@ -12,3 +12,20 @@ main
   max-width: $container-width
   margin: 0 auto
   min-height: 70vh
+
+input, button
+  background-color: white
+  padding: .35rem 1rem
+  +border-radius(5px)
+  width: 100%
+  font-size: 1rem
+  color: $black
+  font-weight: 600
+  &::placeholder
+    font-weight: 300
+    color: rgba(0, 0, 0, .5)
+
+button
+  border: unset
+  @include box-shadow($input-shadow)
+  padding: .75rem
