@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node init.js"
+    "dev:server": "nodemon --exec babel-node init.js",
+    "dev:assets": "cross-env WEBPACK_ENV=development webpack --watch --debug --display-error-details",
+    "build:assets": "cross-env WEBPACK_ENV=production webpack -p",
+    "prod:server": "babel-node init.js",
+    "start": "concurrently \"build:assets\" \"prod:server\""
   },
   "repository": {
     "type": "git",
@@ -20,18 +24,29 @@
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
+    "autoprefixer": "^9.7.5",
+    "babel-loader": "^8.1.0",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "mongoose": "^5.9.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "pug": "^2.0.4"
+    "node-sass-middleware": "^0.11.0",
+    "postcss-middleware": "^1.1.4",
+    "pug": "^2.0.4",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.10.1",

@@ -25,7 +25,7 @@ export const search = async (req, res) => {
           title: {
             $regex: new RegExp(
               `(${searchString.join(')|(')})|(${searchingBy})`,
-              'i'
+              'i',
             ),
           },
         },
@@ -33,7 +33,7 @@ export const search = async (req, res) => {
           description: {
             $regex: new RegExp(
               `(${searchString.join(')|(')})|(${searchingBy})`,
-              'i'
+              'i',
             ),
           },
         },
@@ -108,7 +108,7 @@ export const postEditVideo = async (req, res) => {
         title,
         description,
       },
-      { new: true }
+      { new: true },
     );
     res.redirect(routes.videoDetail(id));
   } catch (e) {

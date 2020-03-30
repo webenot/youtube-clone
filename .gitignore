@@ -106,3 +106,6 @@ dist
 .idea
 
 uploads/
+public/javascript/
+public/stylesheets/*.css
+public/stylesheets/*.css.map
