@@ -1,13 +1,15 @@
 extends layouts/main
 include mixins/videoBlock
 block content
-  .video__player
-    video(src='/' + video.fileUrl, controls="true")
-  .video__info
-    if user.isAuthenticated
-      a(href=routes.editVideo(video.id)) Edit video
-    h5.video__title= video.title
-    span.video__views= video.views
-    p.video__description= video.description
-  .video__comments
-    span.video__comments-number #{video.comments.length} comment#{video.comments.length !== 1 ? 's' : ''}
+  .video-detail__container
+    .video__player
+      video(src='/' + video.fileUrl, controls="true")
+    .video__info
+      if user.isAuthenticated
+        a(href=routes.editVideo(video.id))
+          button Edit video
+      h5.video__title= video.title
+      p.video__description= video.description
+      span.video__views= video.views === 1 ? '1 view' : video.views + ' views'
+    .video__comments
+      span.video__comments-number #{video.comments.length} comment#{video.comments.length !== 1 ? 's' : ''}

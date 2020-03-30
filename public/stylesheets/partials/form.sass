@@ -3,17 +3,19 @@
   +display-flex()
   +flex-direction(column)
   +align-items(center)
-  form
+  a
     width: 100%
     max-width: $form-width
+  form
+    width: 100%
     margin-bottom: 3rem
+    max-width: $form-width
     input
       display: block
       width: 100%
-      padding: .75rem
       @include box-shadow($input-shadow)
       &:not(:last-child)
         margin-bottom: 1rem
-      &[type="submit"]
-        background-color: $blue
-        color: white
+    textarea
+      &:not(:last-child)
+        margin-bottom: 1rem

@@ -13,19 +13,26 @@ main
   margin: 0 auto
   min-height: 70vh
 
-input, button
+input, button, textarea
   background-color: white
-  padding: .35rem 1rem
+  padding: .75rem
   +border-radius(5px)
   width: 100%
   font-size: 1rem
   color: $black
   font-weight: 600
+  max-width: $form-width
+  border: none
+  @include box-shadow($input-shadow)
   &::placeholder
     font-weight: 300
     color: rgba(0, 0, 0, .5)
 
-button
-  border: unset
-  @include box-shadow($input-shadow)
-  padding: .75rem
+button, input[type="submit"]
+  border: none
+  cursor: pointer
+  background-color: $blue
+  color: white
+
+button.delete
+  background-color: $dark-red
