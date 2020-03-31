@@ -5,7 +5,7 @@ block content
     .video__player
       video(src='/' + video.fileUrl, controls="true")
     .video__info
-      if user.isAuthenticated
+      if user
         a(href=routes.editVideo(video.id))
           button Edit video
       h5.video__title= video.title
