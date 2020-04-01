@@ -11,6 +11,10 @@ const USER_DETAIL = '/:id';
 const EDIT_PROFILE = '/edit-profile';
 const CHANGE_PASSWORD = '/change-password';
 
+// Third party auth services
+const GITHUB_AUTH = '/auth/github';
+const GITHUB_CALLBACK = '/auth/github/callback';
+
 // Videos
 const VIDEOS = '/videos';
 const UPLOAD = '/upload';
@@ -33,6 +37,8 @@ const routes = {
   videoDetail: (id) => (id ? `${VIDEOS}/${id}` : VIDEO_DETAIL),
   editVideo: (id) => (id ? `${VIDEOS}${EDIT_VIDEO.replace(':id', id)}` : EDIT_VIDEO),
   deleteVideo: (id) => (id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO),
+  githubAuth: GITHUB_AUTH,
+  githubCallback: GITHUB_CALLBACK,
 };
 
 export default routes;

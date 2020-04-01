@@ -10,8 +10,11 @@ import { onlyPrivate } from '../middlewares';
 
 const userRouter = express.Router();
 
+// Edit user data
 userRouter.get(routes.editProfile, onlyPrivate, editProfile);
 userRouter.get(routes.changePassword, onlyPrivate, changePassword);
+
+// User details
 userRouter.get(routes.userDetail(), userDetail);
 
 export default userRouter;
