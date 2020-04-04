@@ -45,12 +45,7 @@ export const githubLoginCallback = async (_, __, profile, done) => {
     let user = await User.findOne({ email });
     if (!user) {
       try {
-        user = await User.create({
-          githubId: id,
-          avatarUrl,
-          name,
-          email,
-        });
+        user = await User.create({ githubId: id, avatarUrl, name, email });
         return done(null, user);
       } catch (e) {
         console.error(e);
@@ -87,15 +82,12 @@ export const profile = (req, res) => {
 };
 
 export const userDetail = async (req, res) => {
-  if (req.params.id) {
-    try {
-      const user = await User.findById(req.params.id);
-      res.render('userDetail', { pageTitle: 'User Detail', user });
-    } catch (e) {
-      console.error(e);
-      res.redirect(routes.home);
-    }
-  } else {
+  const { params: { id } } = req;
+  try {
+    const user = await User.findById(id);
+    res.render('userDetail', { pageTitle: 'User Detail', user });
+  } catch (e) {
+    console.error(e);
     res.redirect(routes.home);
   }
 };
