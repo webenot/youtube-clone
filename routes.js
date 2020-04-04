@@ -10,6 +10,7 @@ const USERS = '/users';
 const USER_DETAIL = '/:id';
 const EDIT_PROFILE = '/edit-profile';
 const CHANGE_PASSWORD = '/change-password';
+const PROFILE = '/profile';
 
 // Third party auth services
 const GITHUB_AUTH = '/auth/github';
@@ -32,6 +33,7 @@ const routes = {
   userDetail: (id) => (id ? `${USERS}/${id}` : USER_DETAIL),
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
+  profile: PROFILE,
   videos: VIDEOS,
   upload: UPLOAD,
   videoDetail: (id) => (id ? `${VIDEOS}/${id}` : VIDEO_DETAIL),
