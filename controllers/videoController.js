@@ -62,7 +62,6 @@ export const videoDetail = async (req, res) => {
   const { params: { id } } = req;
   try {
     const video = await Video.findById(id).populate('creator');
-    console.log(video);
     if (!video) {
       throw new Error('Video not found');
     }
@@ -113,12 +112,10 @@ export const deleteVideo = async (req, res) => {
   const { params: { id }, user: { id: creator } } = req;
   try {
     const video = await Video.findOne({ _id: id, creator });
-    console.log('video', video);
     if (!video) {
       throw new Error('Video not found');
     }
     const deleted = await Video.findOneAndRemove({ _id: id, creator });
-    console.log('deleted', deleted);
     if (deleted) {
       if (fs.existsSync(video.fileUrl)) {
         fs.unlinkSync(video.fileUrl);

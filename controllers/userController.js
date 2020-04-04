@@ -9,7 +9,6 @@ export const getJoin = (req, res) => {
 };
 
 export const postJoin = async (req, res, next) => {
-  console.log('postJoin', req.body);
   const { body: { name, email, password, password2 } } = req;
   if (password !== password2) {
     res.status(406);
@@ -75,7 +74,6 @@ export const postGithubLogin = (req, res) => {
 };
 
 export const fbLoginCallback = async (_, __, profile, done) => {
-  console.log(profile);
   const { _json: { id, name, email } } = profile;
   const avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
   try {
@@ -98,7 +96,6 @@ export const fbLoginCallback = async (_, __, profile, done) => {
       }
       user.save();
     }
-    console.log(user);
     return done(null, user);
   } catch (e) {
     console.error(e);
@@ -120,10 +117,10 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const profile = (req, res) => {
+export const profile = async (req, res) => {
   if (req.user) {
-    console.log('user', req.user);
-    res.render('userDetail', { pageTitle: 'User Detail', user: req.user });
+    const user = await User.findById(req.user.id).populate('videos');
+    res.render('userDetail', { pageTitle: 'User Detail', user });
   } else {
     res.redirect(routes.home);
   }
@@ -133,7 +130,6 @@ export const userDetail = async (req, res) => {
   const { params: { id } } = req;
   try {
     const user = await User.findById(id).populate('videos');
-    console.log('user', user);
     res.render('userDetail', { pageTitle: 'User Detail', user });
   } catch (e) {
     console.error(e);
@@ -147,7 +143,6 @@ export const getEditProfile = (req, res) => {
 };
 export const postEditProfile = async (req, res) => {
   const { user: { id }, body: { name, email }, file } = req;
-  console.log('file', file);
   try {
     const user = await User.findById(id);
     if (user.name !== name) {
