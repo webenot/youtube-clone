@@ -1,0 +1,19 @@
+.social-login
+  width: 100%
+  max-width: $form-width
+  a
+    display: block
+    button
+      color: white
+      +display-flex()
+      +align-items(center)
+      +justify-content(center)
+      span
+        margin-right: .75rem
+        font-size: 1.5rem
+    &:not(:last-child)
+      margin-bottom: $gap
+  .social-login--github
+    background-color: $black
+  .social-login--facebook
+    background-color: $facebook-blue

@@ -1,0 +1,10 @@
+extends layouts/main
+block content
+  .form-container
+    form(action=routes.users + routes.editProfile, method="post", enctype="multipart/form-data")
+      .fileUpload
+        label(for="avatar") Avatar
+        input#avatar(type="file", name="avatar", accept="image/*")
+      input(type="text", name="name", placeholder="Full Name", value=loggedUser.name)
+      input(type="email", name="email", placeholder="Email", value=loggedUser.email)
+      input(type="submit", value="Update Profile")

@@ -1,0 +1,15 @@
+.home-videos
+  +display-grid()
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))
+  grid-template-rows: inherit
+  grid-gap: $gap
+  grid-auto-flow: dense
+  .videoBlock
+    &:first-child, &:nth-child(2), &:nth-child(3)
+      grid-column: span 2
+  @media (max-width: $mobile-width)
+    +display-flex()
+    +flex-direction(column)
+    +align-items(center)
+    .videoBlock
+      margin-bottom: $gap

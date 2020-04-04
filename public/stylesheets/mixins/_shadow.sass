@@ -1,0 +1,5 @@
+@mixin box-shadow($shadow)
+  @each $element in $shadow
+    box-shadow: $element
+    -moz-box-shadow: $element
+    -webkit-box-shadow: $element
