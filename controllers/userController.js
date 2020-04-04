@@ -72,13 +72,57 @@ export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+export const fbLoginCallback = async (_, __, profile, done) => {
+  console.log(profile);
+  const { _json: { id, name, email, picture: { data: { url: avatarUrl } } } } = profile;
+  try {
+    let user = await User.findOne({ name });
+    if (!user) {
+      try {
+        user = await User.create({ facebookId: id, name, email, avatarUrl });
+        return done(null, user);
+      } catch (e) {
+        console.error(e);
+        return done(e, null);
+      }
+    } else if (!user.facebookId) {
+      user.facebookId = id;
+      if (!user.name) {
+        user.name = name;
+      }
+      if (!user.avatarUrl) {
+        user.avatarUrl = avatarUrl;
+      }
+      user.save();
+    }
+    console.log(user);
+    return done(null, user);
+  } catch (e) {
+    console.error(e);
+    return done(e, null);
+  }
+};
+
+export const fbLogin = passport.authenticate('facebook');
+
+export const fbAuthenticate =
+  passport.authenticate('facebook', { failureRedirect: '/login' });
+
+export const postFbLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 };
 
 export const profile = (req, res) => {
-  res.render('userDetail', { pageTitle: 'User Detail', user: req.user });
+  if (req.user) {
+    res.render('userDetail', { pageTitle: 'User Detail', user: req.user });
+  } else {
+    res.redirect(routes.home);
+  }
 };
 
 export const userDetail = async (req, res) => {

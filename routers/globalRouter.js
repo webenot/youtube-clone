@@ -2,11 +2,14 @@ import express from 'express';
 
 import { home, search } from '../controllers/videoController';
 import {
+  fbAuthenticate,
+  fbLogin,
   getJoin,
   getLogin,
   githubAuthenticate,
   githubLogin,
   logout,
+  postFbLogin,
   postGithubLogin,
   postJoin,
   postLogin,
@@ -30,6 +33,8 @@ globalRouter.post(routes.login, onlyPublic, postLogin);
 // Third party auth services callbacks
 globalRouter.get(routes.githubAuth, githubLogin);
 globalRouter.get(routes.githubCallback, githubAuthenticate, postGithubLogin);
+globalRouter.get(routes.fbAuth, fbLogin);
+globalRouter.get(routes.fbCallback, fbAuthenticate, postFbLogin);
 
 // Logout
 globalRouter.get(routes.logout, onlyPrivate, logout);

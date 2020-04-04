@@ -15,6 +15,8 @@ const PROFILE = '/profile';
 // Third party auth services
 const GITHUB_AUTH = '/auth/github';
 const GITHUB_CALLBACK = '/auth/github/callback';
+const FB_AUTH = '/auth/fb';
+const FB_CALLBACK = '/auth/fb/callback';
 
 // Videos
 const VIDEOS = '/videos';
@@ -41,6 +43,8 @@ const routes = {
   deleteVideo: (id) => (id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO),
   githubAuth: GITHUB_AUTH,
   githubCallback: GITHUB_CALLBACK,
+  fbAuth: FB_AUTH,
+  fbCallback: FB_CALLBACK,
 };
 
 export default routes;

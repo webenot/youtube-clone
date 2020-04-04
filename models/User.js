@@ -21,6 +21,9 @@ UserSchema.plugin(passportLocalMongoose, {
     MissingUsernameError: 'No username was given',
     UserExistsError: 'A user with the given username is already registered',
   },
+  usernameLowerCase: true,
+  limitAttempts: true,
+  maxAttempts: 5,
 });
 
 const model = mongoose.model('User', UserSchema);
