@@ -2,5 +2,6 @@ extends layouts/main
 block content
   .user-detail
     .user-detail__header
-      img.avatar(src=user.avatarUrl, title=user.name)
+      if user.avatarUrl
+        img.avatar(src=user.avatarUrl, title=user.name)
       h4.user-detail__name= user.name

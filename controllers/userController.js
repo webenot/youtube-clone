@@ -74,7 +74,8 @@ export const postGithubLogin = (req, res) => {
 
 export const fbLoginCallback = async (_, __, profile, done) => {
   console.log(profile);
-  const { _json: { id, name, email, picture: { data: { url: avatarUrl } } } } = profile;
+  const { _json: { id, name, email } } = profile;
+  const avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
   try {
     let user = await User.findOne({ name });
     if (!user) {
