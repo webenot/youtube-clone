@@ -1,3 +1,4 @@
+import fs from 'fs';
 import passport from 'passport';
 
 import routes from '../routes';
@@ -137,6 +138,39 @@ export const userDetail = async (req, res) => {
   }
 };
 
-export const editProfile = (req, res) => res.render('editProfile', { pageTitle: 'Edit Profile' });
-export const changePassword =
-  (req, res) => res.render('changePassword', { pageTitle: 'Change Password' });
+export const getEditProfile = (req, res) => {
+  res.render('editProfile', { pageTitle: 'Edit Profile' });
+};
+export const postEditProfile = async (req, res) => {
+  const { user: { id }, body: { name, email }, file } = req;
+  console.log('file', file);
+  try {
+    const user = await User.findById(id);
+    if (user.name !== name) {
+      user.name = name;
+    }
+    if (user.email !== email) {
+      user.email = email;
+    }
+    if (file && file.path) {
+      if (user.avatarUrl) {
+        if (fs.existsSync(user.avatarUrl)) {
+          fs.unlinkSync(user.avatarUrl);
+        }
+      }
+      user.avatarUrl = file.path.replace(/\\/g, '/');
+    }
+    user.save();
+    res.redirect(routes.users + routes.profile);
+  } catch (e) {
+    console.error(e);
+    res.render('editProfile', { pageTitle: 'Edit Profile' });
+  }
+};
+
+export const getChangePassword = (req, res) => {
+  res.render('changePassword', { pageTitle: 'Change Password' });
+};
+export const postChangePassword = async (req, res) => {
+  res.render('changePassword', { pageTitle: 'Change Password' });
+};

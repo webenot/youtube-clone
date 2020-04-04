@@ -5,6 +5,6 @@ block content
       .fileUpload
         label(for="avatar") Avatar
         input#avatar(type="file", name="avatar", accept="image/*")
-      input(type="text", name="name", placeholder="Full Name")
-      input(type="email", name="email", placeholder="Email")
+      input(type="text", name="name", placeholder="Full Name", value=loggedUser.name)
+      input(type="email", name="email", placeholder="Email", value=loggedUser.email)
       input(type="submit", value="Update Profile")
