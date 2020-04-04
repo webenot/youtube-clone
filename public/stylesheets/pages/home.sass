@@ -4,8 +4,9 @@
   grid-template-rows: inherit
   grid-gap: $gap
   grid-auto-flow: dense
-  .videoBlock:first-child, .videoBlock:nth-child(2), .videoBlock:nth-child(3)
-    grid-column: span 2
+  .videoBlock
+    &:first-child, &:nth-child(2), &:nth-child(3)
+      grid-column: span 2
   @media (max-width: $mobile-width)
     +display-flex()
     +flex-direction(column)

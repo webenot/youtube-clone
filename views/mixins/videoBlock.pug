@@ -1,7 +1,10 @@
 mixin videoBlock(video)
   .videoBlock
-    a(href=routes.videoDetail(video.id))
+    a.videoBlock__video(href=routes.videoDetail(video.id))
       video.videoBlock__thumbnail(src='/' + video.fileUrl)
-      h4.videoBlock__title= video.title
+    h4.videoBlock__title= video.title
+    .videoBlock__author
+      span Uploaded by
+      a.link(href=routes.userDetail(video.creator.id))= video.creator.name
     h6.videoBlock__views= video.views === 1 ? '1 view' : video.views + ' views'
     p.videoBlock__description= video.description

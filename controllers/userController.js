@@ -22,7 +22,7 @@ export const postJoin = async (req, res, next) => {
       next();
     } catch (e) {
       console.error(e);
-      res.status(500);
+      res.status(403);
       res.render('join', { pageTitle: 'Join' });
     }
   }
@@ -122,6 +122,7 @@ export const logout = (req, res) => {
 
 export const profile = (req, res) => {
   if (req.user) {
+    console.log('user', req.user);
     res.render('userDetail', { pageTitle: 'User Detail', user: req.user });
   } else {
     res.redirect(routes.home);
@@ -131,11 +132,12 @@ export const profile = (req, res) => {
 export const userDetail = async (req, res) => {
   const { params: { id } } = req;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('videos');
+    console.log('user', user);
     res.render('userDetail', { pageTitle: 'User Detail', user });
   } catch (e) {
     console.error(e);
-    res.status(500);
+    res.status(404);
     res.redirect(routes.home);
   }
 };
@@ -166,7 +168,7 @@ export const postEditProfile = async (req, res) => {
     res.redirect(routes.users + routes.profile);
   } catch (e) {
     console.error(e);
-    res.status(500);
+    res.status(403);
     res.render('editProfile', { pageTitle: 'Edit Profile' });
   }
 };
@@ -185,7 +187,7 @@ export const postChangePassword = async (req, res) => {
       res.redirect(routes.users + routes.profile);
     } catch (e) {
       console.error(e);
-      res.status(406);
+      res.status(403);
       res.render('changePassword', { pageTitle: 'Change Password' });
     }
   }

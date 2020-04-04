@@ -5,10 +5,13 @@ block content
     .video__player
       video(src='/' + video.fileUrl, controls="true")
     .video__info
-      if user
+      if loggedUser && video.creator.id === loggedUser.id
         a(href=routes.editVideo(video.id))
           button Edit video
       h5.video__title= video.title
+      .video__author
+        span Uploaded by
+        a.link(href=routes.userDetail(video.creator.id))= video.creator.name
       p.video__description= video.description
       span.video__views= video.views === 1 ? '1 view' : video.views + ' views'
     .video__comments
