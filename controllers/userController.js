@@ -22,6 +22,7 @@ export const postJoin = async (req, res, next) => {
       next();
     } catch (e) {
       console.error(e);
+      res.status(500);
       res.render('join', { pageTitle: 'Join' });
     }
   }
@@ -134,6 +135,7 @@ export const userDetail = async (req, res) => {
     res.render('userDetail', { pageTitle: 'User Detail', user });
   } catch (e) {
     console.error(e);
+    res.status(500);
     res.redirect(routes.home);
   }
 };
@@ -164,6 +166,7 @@ export const postEditProfile = async (req, res) => {
     res.redirect(routes.users + routes.profile);
   } catch (e) {
     console.error(e);
+    res.status(500);
     res.render('editProfile', { pageTitle: 'Edit Profile' });
   }
 };
@@ -172,5 +175,18 @@ export const getChangePassword = (req, res) => {
   res.render('changePassword', { pageTitle: 'Change Password' });
 };
 export const postChangePassword = async (req, res) => {
-  res.render('changePassword', { pageTitle: 'Change Password' });
+  const { body: { oldPassword, password, password2 } } = req;
+  if (password !== password2) {
+    res.status(406);
+    res.render('changePassword', { pageTitle: 'Change Password' });
+  } else {
+    try {
+      await req.user.changePassword(oldPassword, password);
+      res.redirect(routes.users + routes.profile);
+    } catch (e) {
+      console.error(e);
+      res.status(406);
+      res.render('changePassword', { pageTitle: 'Change Password' });
+    }
+  }
 };
