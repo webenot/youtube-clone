@@ -3,5 +3,11 @@ block content
   .user-detail
     .user-detail__header
       if user.avatarUrl
-        img.avatar(src=user.avatarUrl, title=user.name)
+        img.u-avatar(src=user.avatarUrl, title=user.name)
       h4.user-detail__name= user.name
+    if user.id === loggedUser.id
+      .user-detail__btns
+        a(href=routes.users + routes.editProfile)
+          button(type="button") 🖊 Edit Profile
+        a(href=routes.users + routes.changePassword)
+          button(type="button") 🔒 Change Password
