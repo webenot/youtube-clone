@@ -111,12 +111,12 @@ class VideoPlayer {
   }
 
   volumeChange (value) {
-    this.player.volume = value;
+    this.player.volume = +value;
     const volumeTracker = this.container.querySelector('.rangeTracker');
     volumeTracker.style.height =
       `${this.player.volume * 100}px`;
     const icon = this.volumeBtn.querySelector('i');
-    if (!value) {
+    if (+value === 0) {
       icon.classList.remove('fa-volume-up');
       icon.classList.add('fa-volume-mute');
     } else if (!icon.classList.contains('fa-volume-up')) {
@@ -143,7 +143,6 @@ class VideoPlayer {
     });
     this.container.onwheel = (event) => {
       event.preventDefault();
-      console.log(event);
       let volume = +this.player.volume;
       volume += -(event.deltaY / 1000);
       if (volume > 1) {
