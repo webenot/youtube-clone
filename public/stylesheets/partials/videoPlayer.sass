@@ -1,0 +1,35 @@
+.videoPlayer
+  position: relative
+  &:hover
+    .videoPlayer__controls
+      +opacity(1)
+  video
+    max-width: 100%
+  .videoPlayer__controls
+    +opacity(0)
+    +transition(opacity .4s linear)
+    +display-grid()
+    grid-template-columns: repeat(3, 1fr)
+    background-color: rgba(0, 0, 0, .5)
+    color: $dark-grey
+    padding: $middle-gap
+    position: absolute
+    bottom: 2px
+    left: 0
+    right: 0
+    font-size: 1rem
+    .videoPlayer__column
+      &:first-child
+        +display-flex()
+        +align-items(center)
+        span:first-child
+          margin-right: $small-gap
+      &:last-child
+        justify-self: end
+      &:nth-child(2)
+        justify-self: center
+    i
+      font-size: 1.25rem
+      cursor: pointer
+      &:hover, &:focus, &:active
+        color: $grey
