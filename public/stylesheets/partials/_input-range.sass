@@ -1,0 +1,108 @@
+$range-thumb-width: 20px
+$range-tracker-height: 4px
+$max-width: 100px
+$min-width: 50px
+$tracker-border-radius: 3px
+$thumb-margin-top: -($range-tracker-height + $range-tracker-height / 2 + 1)
+$range-thumb-bg: #bbb
+
+.videoPlayer__volume
+  position: absolute
+  left: 0
+  background-color: rgba(0,0,0,.5)
+  bottom: 50px
+  width: 50px
+  height: 120px
+  input[type="range"]
+    +appearance(none)
+    background-color: transparent
+    position: absolute
+    margin: 0
+    padding: 0
+    width: $max-width
+    min-width: $min-width
+    top: 66px
+    left: -25px
+    +transform(rotate(-90deg))
+    &::-webkit-slider-runnable-track
+      width: 100%
+      height: $range-tracker-height
+      cursor: pointer
+      background: #484d4d
+      +border-radius($tracker-border-radius)
+      position: relative
+      +box-shadow(unset)
+    &::-webkit-slider-thumb
+      width: $range-thumb-width
+      height: $range-thumb-width
+      border-radius: 50%
+      background: $range-thumb-bg
+      cursor: pointer
+      +appearance(none)
+      margin-top: $thumb-margin-top
+      position: relative
+      z-index: 2
+    &:focus::-webkit-slider-runnable-track
+      background: #545a5a
+      +box-shadow(unset)
+    &::-moz-range-track
+      width: 100%
+      height: $range-tracker-height
+      cursor: pointer
+      background: #484d4d
+      +border-radius($tracker-border-radius)
+      position: relative
+      +box-shadow(unset)
+    &::-moz-range-thumb
+      height: $range-thumb-width
+      width: $range-thumb-width
+      border-radius: 50%
+      background: $range-thumb-bg
+      cursor: pointer
+      margin-top: $thumb-margin-top
+      position: relative
+      z-index: 2
+    &::-ms-track
+      width: 100%
+      height: $range-tracker-height
+      cursor: pointer
+      background: transparent
+      border-color: transparent
+      color: transparent
+      position: relative
+      +border-radius($tracker-border-radius)
+      +box-shadow(unset)
+    &::-ms-fill-lower
+      background: #3c4040
+      border-radius: 0
+      +box-shadow(unset)
+    &::-ms-fill-upper
+      background: #484d4d
+      border-radius: 0
+      +box-shadow(unset)
+    &::-ms-thumb
+      width: $range-thumb-width
+      height: $range-thumb-width
+      border-radius: 50%
+      background: $range-thumb-bg
+      cursor: pointer
+      margin-top: $thumb-margin-top
+      position: relative
+      z-index: 2
+    &:focus::-ms-fill-lower
+      background: #484d4d
+      +box-shadow(unset)
+    &:focus::-ms-fill-upper
+      background: #545a5a
+      +box-shadow(unset)
+
+  .rangeTracker
+    display: inline-block
+    background-color: $range-thumb-bg
+    position: absolute
+    bottom: 0
+    height: 100px
+    width: 5px
+    left: 23px
+    +border-radius($tracker-border-radius)
+    z-index: 1

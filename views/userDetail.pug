@@ -6,7 +6,7 @@ block content
       if user.avatarUrl
         img.u-avatar(src=(user.avatarUrl.indexOf('http') !== 0 ? '/' : '') + user.avatarUrl, title=user.name)
       h4.user-detail__name= user.name
-    if user.id === loggedUser.id
+    if loggedUser && user.id === loggedUser.id
       .user-detail__btns
         a(href=routes.users + routes.editProfile)
           button(type="button") 🖊 Edit Profile

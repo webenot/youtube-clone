@@ -1,5 +1,5 @@
-const something = async () => {
-  console.log('something');
-};
+import videoPlayerInit from './modules/videoPlayer';
 
-something();
+document.addEventListener('DOMContentLoaded', () => {
+  videoPlayerInit('jsVideoPlayer');
+});
