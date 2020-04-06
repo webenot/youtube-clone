@@ -1,8 +1,12 @@
 import formatVideoTime from '../helpers/formatVideoTime';
 
-class VideoPlayer {
-  defaultVolume = 0.5;
+const LOUD = 0.7;
+const SILENT = 0.2;
+const ARROW_STEP = 0.1;
+const MOUSE_STEP = 1000;
+const DEFAULT_VOLUME = 0.5;
 
+class VideoPlayer {
   constructor (containerId) {
     this.container = document.getElementById(containerId);
     if (!this.container) return;
@@ -21,8 +25,8 @@ class VideoPlayer {
       this.player.addEventListener('loadedmetadata', () => {
         this.totalTimeContainer.innerHTML = formatVideoTime(this.player.duration);
         this.currentTimeContainer.innerHTML = formatVideoTime(this.player.currentTime);
-        this.volumeInput.value = this.defaultVolume;
-        this.volumeChange(this.defaultVolume);
+        this.volumeInput.value = DEFAULT_VOLUME;
+        this.volumeChange(DEFAULT_VOLUME);
         resolve();
       });
       this.player.addEventListener('error', () => {
@@ -33,13 +37,13 @@ class VideoPlayer {
 
   volumeKeyControl = (event) => {
     if (event.code === 'ArrowUp') {
-      let volume = this.player.volume + 0.1;
+      let volume = this.player.volume + ARROW_STEP;
       if (volume > 1) volume = 1;
       this.volumeChange(volume);
       this.volumeInput.value = volume;
     }
     if (event.code === 'ArrowDown') {
-      let volume = this.player.volume - 0.1;
+      let volume = this.player.volume - ARROW_STEP;
       if (volume < 0) volume = 0;
       this.volumeChange(volume);
       this.volumeInput.value = volume;
@@ -47,13 +51,12 @@ class VideoPlayer {
   };
 
   fullscreenchangeHandler () {
-    const icon = this.fullScreenBtn.querySelector('i');
-    icon.classList.toggle('fa-expand');
-    icon.classList.toggle('fa-compress');
     this.container.classList.toggle('fullScreen');
     if (this.isFullScreen) {
+      this.fullScreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
       document.addEventListener('keydown', this.volumeKeyControl);
     } else {
+      this.fullScreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
       document.removeEventListener('keydown', this.volumeKeyControl);
     }
   }
@@ -100,14 +103,13 @@ class VideoPlayer {
   }
 
   async play () {
-    const icon = this.playBtn.querySelector('i');
     if (this.player.paused) {
       await this.player.play();
+      this.playBtn.innerHTML = '<i class="fas fa-pause"></i>';
     } else {
       await this.player.pause();
+      this.playBtn.innerHTML = '<i class="fas fa-play"></i>';
     }
-    icon.classList.toggle('fa-pause');
-    icon.classList.toggle('fa-play');
   }
 
   volumeChange (value) {
@@ -115,14 +117,17 @@ class VideoPlayer {
     const volumeTracker = this.container.querySelector('.rangeTracker');
     volumeTracker.style.height =
       `${this.player.volume * 100}px`;
-    const icon = this.volumeBtn.querySelector('i');
     if (+value === 0) {
-      icon.classList.remove('fa-volume-up');
-      icon.classList.add('fa-volume-mute');
+      this.volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
       this.player.muted = true;
-    } else if (!icon.classList.contains('fa-volume-up')) {
-      icon.classList.add('fa-volume-up');
-      icon.classList.remove('fa-volume-mute');
+    } else {
+      if (+value > LOUD) {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else if (+value > SILENT) {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+      } else {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
+      }
       this.player.muted = false;
     }
   }
@@ -133,17 +138,22 @@ class VideoPlayer {
     if (this.player.muted) {
       this.volumeInput.value = 0;
       volumeTracker.style.height = 0;
+      this.volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
     } else {
       if (!this.player.volume) {
-        this.player.volume = this.defaultVolume;
+        this.player.volume = DEFAULT_VOLUME;
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+      } else if (this.player.volume > LOUD) {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else if (this.player.volume > SILENT) {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
+      } else {
+        this.volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
       }
       this.volumeInput.value = this.player.volume;
       volumeTracker.style.height =
         `${this.player.volume * 100}px`;
     }
-    const icon = this.volumeBtn.querySelector('i');
-    icon.classList.toggle('fa-volume-up');
-    icon.classList.toggle('fa-volume-mute');
   };
 
   initVolume () {
@@ -157,7 +167,7 @@ class VideoPlayer {
     this.container.onwheel = (event) => {
       event.preventDefault();
       let volume = +this.player.volume;
-      volume += -(event.deltaY / 1000);
+      volume += -(event.deltaY / MOUSE_STEP);
       if (volume > 1) {
         volume = 1;
       } else if (volume < 0) {
@@ -191,9 +201,7 @@ class VideoPlayer {
   }
 
   ended = () => {
-    const icon = this.playBtn.querySelector('i');
-    icon.classList.remove('fa-pause');
-    icon.classList.add('fa-play');
+    this.playBtn.innerHTML = '<i class="fas fa-play"></i>';
     this.player.currentTime = 0;
     this.currentTimeContainer.innerHTML = formatVideoTime(0);
   };
