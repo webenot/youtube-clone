@@ -119,9 +119,11 @@ class VideoPlayer {
     if (+value === 0) {
       icon.classList.remove('fa-volume-up');
       icon.classList.add('fa-volume-mute');
+      this.player.muted = true;
     } else if (!icon.classList.contains('fa-volume-up')) {
       icon.classList.add('fa-volume-up');
       icon.classList.remove('fa-volume-mute');
+      this.player.muted = false;
     }
   }
 
@@ -132,6 +134,9 @@ class VideoPlayer {
       this.volumeInput.value = 0;
       volumeTracker.style.height = 0;
     } else {
+      if (!this.player.volume) {
+        this.player.volume = this.defaultVolume;
+      }
       this.volumeInput.value = this.player.volume;
       volumeTracker.style.height =
         `${this.player.volume * 100}px`;
