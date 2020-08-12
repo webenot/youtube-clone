@@ -4,7 +4,7 @@ const LOUD = 0.7;
 const SILENT = 0.2;
 const ARROW_STEP = 0.1;
 const MOUSE_STEP = 1000;
-const DEFAULT_VOLUME = 0.5;
+const DEFAULT_VOLUME = 0;
 
 export class VideoPlayer {
   constructor (containerId) {
@@ -240,7 +240,6 @@ export class VideoPlayer {
     } catch (e) {
       console.error(e);
     }
-
     this.initPlay();
     this.initVolume();
     this.initFullScreen();
@@ -256,10 +255,9 @@ export class VideoPlayer {
       .then(response => {
         if (response.status === 200) {
           const viewsContainer = document.querySelector('.video__views');
-          const views = viewsContainer.innerText.split(' ');
-          let viewsNumber = +views[0];
-          viewsNumber = !isNaN(viewsNumber) ? viewsNumber + 1 : 1;
-          viewsContainer.innerText = viewsNumber === 1 ? '1 view' : `${viewsNumber} views`;
+          let views = +viewsContainer.innerText;
+          views = !isNaN(views) ? views + 1 : 1;
+          viewsContainer.innerText = views === 1 ? '1 view' : `${views} views`;
         }
       });
   }

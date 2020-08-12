@@ -13,5 +13,12 @@ block content
         a.link(href=routes.userDetail(video.creator.id))= video.creator.name
       p.video__description= video.description
       span.video__views= video.views === 1 ? '1 view' : video.views + ' views'
-    .video__comments
-      span.video__comments-number #{video.comments.length} comment#{video.comments.length !== 1 ? 's' : ''}
+    .video__comments#jsComments
+      .video__comments-number #{video.comments.length} comment#{video.comments.length !== 1 ? 's' : ''}
+      if loggedUser
+        form.add__comment
+          input(type="text", placeholder="Add a comment")
+      ul.video__comments-list
+        each comment in video.comments
+          li.comment
+            span= comment.text

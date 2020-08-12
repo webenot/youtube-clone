@@ -15,7 +15,9 @@
   "nodemonConfig": {
     "ignore": [
       "public/*",
-      "assets/*"
+      "assets/*",
+      "webpack.config.js",
+      "postcss.config.js"
     ]
   },
   "repository": {

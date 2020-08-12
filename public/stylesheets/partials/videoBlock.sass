@@ -1,11 +1,17 @@
 .videoBlock
   .videoBlock__video
     display: block
+    height: 250px
+    +display-flex()
+    +align-items(center)
+    background-color: black
   .videoBlock__thumbnail, .videoBlock__title, .videoBlock__views, .videoBlock__description, .videoBlock__author
     margin-bottom: $small-gap
   .videoBlock__thumbnail
     max-width: 100%
     height: auto
+    width: 100%
+    max-height: 100%
     background-color: black
   .videoBlock__author
     span
