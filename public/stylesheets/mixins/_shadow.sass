@@ -1,5 +1,8 @@
-@mixin box-shadow($shadow)
+@mixin box-shadow($shadow...)
+  $spec: ()
   @each $element in $shadow
-    box-shadow: $element
-    -moz-box-shadow: $element
-    -webkit-box-shadow: $element
+    $spec: append($spec, $element, comma)
+
+  box-shadow: $spec
+  -moz-box-shadow: $spec
+  -webkit-box-shadow: $spec

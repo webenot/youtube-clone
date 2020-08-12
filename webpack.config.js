@@ -7,9 +7,7 @@ const OUTPUT_DIR = path.join(__dirname, 'public', 'javascript');
 
 const config = {
   entry: [ '@babel/polyfill', ENTRY_FILE ],
-  output: {
-    path: OUTPUT_DIR,
-  },
+  output: { path: OUTPUT_DIR },
   mode: MODE,
   module: {
     rules: [
