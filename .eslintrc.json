@@ -10,6 +10,10 @@
   },
   "parser": "babel-eslint",
   "rules": {
+    "no-underscore-dangle": ["off"],
+    "class-methods-use-this": ["off"],
+    "no-restricted-globals": ["off"],
+    "arrow-parens": ["error", "as-needed"],
     "array-bracket-spacing": ["error", "always", { "objectsInArrays": false, "arraysInArrays": false }],
     "indent": ["error", 2, {
       "SwitchCase": 1,
@@ -88,6 +92,8 @@
     "prefer-spread": ["error"],
     "rest-spread-spacing": ["error", "never"],
     "template-curly-spacing": ["error", "never"],
-    "no-prototype-builtins": ["off"]
+    "no-prototype-builtins": ["off"],
+    "prefer-promise-reject-errors": ["off"],
+    "no-alert": ["off"]
   }
 }

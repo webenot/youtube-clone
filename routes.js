@@ -25,6 +25,11 @@ const VIDEO_DETAIL = '/:id';
 const EDIT_VIDEO = '/:id/edit';
 const DELETE_VIDEO = '/:id/delete';
 
+// API
+const API = '/api';
+const REGISTER_VIEW = '/:id/view';
+const ADD_COMMENT = '/:id/comment';
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -32,19 +37,22 @@ const routes = {
   logout: LOGOUT,
   search: SEARCH,
   users: USERS,
-  userDetail: (id) => (id ? `${USERS}/${id}` : USER_DETAIL),
+  userDetail: id => (id ? `${USERS}/${id}` : USER_DETAIL),
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   profile: PROFILE,
   videos: VIDEOS,
   upload: UPLOAD,
-  videoDetail: (id) => (id ? `${VIDEOS}/${id}` : VIDEO_DETAIL),
-  editVideo: (id) => (id ? `${VIDEOS}${EDIT_VIDEO.replace(':id', id)}` : EDIT_VIDEO),
-  deleteVideo: (id) => (id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO),
+  videoDetail: id => (id ? `${VIDEOS}/${id}` : VIDEO_DETAIL),
+  editVideo: id => (id ? `${VIDEOS}${EDIT_VIDEO.replace(':id', id)}` : EDIT_VIDEO),
+  deleteVideo: id => (id ? `${VIDEOS}${DELETE_VIDEO.replace(':id', id)}` : DELETE_VIDEO),
   githubAuth: GITHUB_AUTH,
   githubCallback: GITHUB_CALLBACK,
   fbAuth: FB_AUTH,
   fbCallback: FB_CALLBACK,
+  api: API,
+  registerView: REGISTER_VIEW,
+  addComment: ADD_COMMENT,
 };
 
 export default routes;

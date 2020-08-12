@@ -26,7 +26,7 @@ input:not([type="file"]), button, textarea
   font-weight: 600
   max-width: $form-width
   border: none
-  @include box-shadow($input-shadow)
+  +box-shadow($input-shadow)
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif
   &::placeholder
     font-weight: 300
@@ -36,7 +36,7 @@ input:not([type="file"]), button, textarea
   background-color: white
   +border-radius(5px)
   padding: .75rem
-  @include box-shadow($input-shadow)
+  +box-shadow($input-shadow)
   label
     font-weight: 300
     margin-right: .75rem
@@ -57,6 +57,8 @@ button.delete
 
 .link
   color: $blue
+  &:visited
+    color: $blue
   &:hover, &:active, &:focus
     color: $dark-blue
     text-decoration: underline

@@ -4,20 +4,21 @@ const LOUD = 0.7;
 const SILENT = 0.2;
 const ARROW_STEP = 0.1;
 const MOUSE_STEP = 1000;
-const DEFAULT_VOLUME = 0.5;
+const DEFAULT_VOLUME = 0;
 
-class VideoPlayer {
+export class VideoPlayer {
   constructor (containerId) {
     this.container = document.getElementById(containerId);
     if (!this.container) return;
     this.player = this.container.querySelector('video');
-    this.playBtn = this.container.querySelector('.play');
-    this.volumeBtn = this.container.querySelector('.volume');
-    this.fullScreenBtn = this.container.querySelector('.full-screen');
+    this.controls = this.container.querySelector('.videoPlayer__controls');
+    this.playBtn = this.controls.querySelector('.play');
+    this.volumeBtn = this.controls.querySelector('.volume');
+    this.fullScreenBtn = this.controls.querySelector('.full-screen');
     this.isFullScreen = false;
-    this.totalTimeContainer = this.container.querySelector('.timeline__total');
-    this.currentTimeContainer = this.container.querySelector('.timeline__current');
-    this.volumeInput = this.container.querySelector('.videoPlayer__volume input');
+    this.totalTimeContainer = this.controls.querySelector('.timeline__total');
+    this.currentTimeContainer = this.controls.querySelector('.timeline__current');
+    this.volumeInput = this.controls.querySelector('.videoPlayer__volume input');
   }
 
   onPlayerLoaded () {
@@ -30,12 +31,12 @@ class VideoPlayer {
         resolve();
       });
       this.player.addEventListener('error', () => {
-        reject();
+        reject('Error loading data');
       });
     });
   }
 
-  volumeKeyControl = (event) => {
+  volumeKeyControl = event => {
     if (event.code === 'ArrowUp') {
       let volume = this.player.volume + ARROW_STEP;
       if (volume > 1) volume = 1;
@@ -61,13 +62,27 @@ class VideoPlayer {
     }
   }
 
-  keydown = async (event) => {
+  keydown = async event => {
     if (event.target.closest('input:not(.videoPlayer__volume___input)')) return;
     if (event.target.closest('textarea')) return;
     if (event.target.closest('select')) return;
     if (event.code === 'Space') {
       event.preventDefault();
       await this.play();
+    }
+    if (event.code === 'ArrowRight') {
+      if (this.player.currentTime < this.player.duration - 5) {
+        this.player.currentTime += 5;
+      } else {
+        this.player.currentTime = this.player.duration;
+      }
+    }
+    if (event.code === 'ArrowLeft') {
+      if (this.player.currentTime > 5) {
+        this.player.currentTime -= 5;
+      } else {
+        this.player.currentTime = 0;
+      }
     }
   };
 
@@ -89,7 +104,7 @@ class VideoPlayer {
   }
 
   initPlay () {
-    this.player.addEventListener('click', async (event) => {
+    this.player.addEventListener('click', async event => {
       if (
         !event.target.closest('.volume') &&
         !event.target.closest('.full-screen')
@@ -159,12 +174,12 @@ class VideoPlayer {
   initVolume () {
     this.volumeBtn.addEventListener('click', this.mute);
 
-    this.volumeInput.addEventListener('input', (event) => {
+    this.volumeInput.addEventListener('input', event => {
       this.volumeChange(event.target.closest('.videoPlayer__volume-wrapper')
         .querySelector('input').value);
     });
 
-    this.container.onwheel = (event) => {
+    this.container.onwheel = event => {
       event.preventDefault();
       let volume = +this.player.volume;
       volume += -(event.deltaY / MOUSE_STEP);
@@ -204,6 +219,7 @@ class VideoPlayer {
     this.playBtn.innerHTML = '<i class="fas fa-play"></i>';
     this.player.currentTime = 0;
     this.currentTimeContainer.innerHTML = formatVideoTime(0);
+    this.registerView();
   };
 
   initEnded () {
@@ -219,8 +235,11 @@ class VideoPlayer {
   async init () {
     if (!this.container) return;
 
-    await this.onPlayerLoaded();
-
+    try {
+      await this.onPlayerLoaded();
+    } catch (e) {
+      console.error(e);
+    }
     this.initPlay();
     this.initVolume();
     this.initFullScreen();
@@ -228,9 +247,23 @@ class VideoPlayer {
     this.initEnded();
     this.changeCurrentTimeLine();
   }
+
+  registerView () {
+    const path = window.location.href.split('/');
+
+    fetch(`/api/${path[path.length - 1]}/view`, { method: 'POST' })
+      .then(response => {
+        if (response.status === 200) {
+          const viewsContainer = document.querySelector('.video__views');
+          let views = +viewsContainer.innerText;
+          views = !isNaN(views) ? views + 1 : 1;
+          viewsContainer.innerText = views === 1 ? '1 view' : `${views} views`;
+        }
+      });
+  }
 }
 
-const videoPlayerInit = (containerId) => {
+export const videoPlayerInit = containerId => {
   const videoContainer = document.getElementById(containerId);
 
   const init = async () => {
@@ -239,8 +272,6 @@ const videoPlayerInit = (containerId) => {
   };
 
   if (videoContainer) {
-    init().catch((error) => console.error(error));
+    init().catch(console.error);
   }
 };
-
-export default videoPlayerInit;
