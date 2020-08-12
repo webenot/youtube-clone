@@ -70,6 +70,20 @@ export class VideoPlayer {
       event.preventDefault();
       await this.play();
     }
+    if (event.code === 'ArrowRight') {
+      if (this.player.currentTime < this.player.duration - 5) {
+        this.player.currentTime += 5;
+      } else {
+        this.player.currentTime = this.player.duration;
+      }
+    }
+    if (event.code === 'ArrowLeft') {
+      if (this.player.currentTime > 5) {
+        this.player.currentTime -= 5;
+      } else {
+        this.player.currentTime = 0;
+      }
+    }
   };
 
   fullscreenchange = () => {
@@ -205,6 +219,7 @@ export class VideoPlayer {
     this.playBtn.innerHTML = '<i class="fas fa-play"></i>';
     this.player.currentTime = 0;
     this.currentTimeContainer.innerHTML = formatVideoTime(0);
+    this.registerView();
   };
 
   initEnded () {
@@ -232,6 +247,21 @@ export class VideoPlayer {
     this.initKeyboardEvents();
     this.initEnded();
     this.changeCurrentTimeLine();
+  }
+
+  registerView () {
+    const path = window.location.href.split('/');
+
+    fetch(`/api/${path[path.length - 1]}/view`, { method: 'POST' })
+      .then(response => {
+        if (response.status === 200) {
+          const viewsContainer = document.querySelector('.video__views');
+          const views = viewsContainer.innerText.split(' ');
+          let viewsNumber = +views[0];
+          viewsNumber = !isNaN(viewsNumber) ? viewsNumber + 1 : 1;
+          viewsContainer.innerText = viewsNumber === 1 ? '1 view' : `${viewsNumber} views`;
+        }
+      });
   }
 }
 

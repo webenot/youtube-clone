@@ -10,6 +10,8 @@
   },
   "parser": "babel-eslint",
   "rules": {
+    "class-methods-use-this": ["off"],
+    "no-restricted-globals": ["off"],
     "arrow-parens": ["error", "as-needed"],
     "array-bracket-spacing": ["error", "always", { "objectsInArrays": false, "arraysInArrays": false }],
     "indent": ["error", 2, {
