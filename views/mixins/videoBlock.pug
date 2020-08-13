@@ -2,7 +2,7 @@ mixin videoBlock(video)
   if video
     .videoBlock
       a.videoBlock__video(href=routes.videoDetail(video.id))
-        video.videoBlock__thumbnail(src='/' + video.fileUrl)
+        video.videoBlock__thumbnail(src=video.fileUrl)
       h4.videoBlock__title= video.title
       if video.creator.name
         .videoBlock__author

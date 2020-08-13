@@ -1,3 +1,5 @@
+include ../mixins/message
+
 doctype html
 html(lang="en")
   head
@@ -7,6 +9,21 @@ html(lang="en")
     link(rel="stylesheet", href="/css/style.css", type="text/css")
     title #{pageTitle} | #{siteName}
   body
+    if messages.success
+      +message({
+        text: messages.success,
+        type: 'success'
+      })
+    else if messages.info
+      +message({
+        text: messages.info,
+        type: 'info'
+      })
+    else if messages.error
+      +message({
+        text: messages.error,
+        type: 'error'
+      })
     include ../partials/header
     main.container
       block content

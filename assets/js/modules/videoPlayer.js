@@ -4,7 +4,7 @@ const LOUD = 0.7;
 const SILENT = 0.2;
 const ARROW_STEP = 0.1;
 const MOUSE_STEP = 1000;
-const DEFAULT_VOLUME = 0;
+const DEFAULT_VOLUME = 0.5;
 
 export class VideoPlayer {
   constructor (containerId) {

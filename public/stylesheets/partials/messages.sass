@@ -1,0 +1,39 @@
+@keyframes flashAnimation
+  0%
+    +transform(translateX(calc(100% + 1rem)))
+  10%
+    +transform(translateX(0))
+  95%
+    +transform(translateX(0))
+  100%
+    +transform(translateX(calc(100% + 1rem)))
+
+.flash-message
+  position: fixed
+  z-index: 999
+  bottom: 1rem
+  right: 1rem
+  +padding(1.5rem)
+  text-align: center
+  +opacity(.75)
+  +border-radius(1.5rem)
+  border-bottom-right-radius: 0
+  animation: flashAnimation 5s ease-in-out forwards
+  +transition(ease right 400ms)
+  +transform(translateX(calc(100% + 1rem)))
+  .flash-message__text
+    color: white
+    font-size: 1.2rem
+    font-weight: bold
+  &.error
+    background-color: $red
+  &.info
+    background-color: $orange
+  &.success
+    background-color: $green
+  .flash-message__close
+    position: absolute
+    top: -1rem
+    right: 0
+    font-size: 1.2rem
+    cursor: pointer

@@ -11,6 +11,7 @@ import passport from 'passport';
 import path from 'path';
 import postcssMiddleware from 'postcss-middleware';
 import sassMiddleware from 'node-sass-middleware';
+import flash from 'express-flash';
 
 import globalRouter from './routers/globalRouter';
 import { localsMiddleware } from './middlewares';
@@ -36,6 +37,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(flash());
 app.use(helmet());
 
 app.use(expressSession({
