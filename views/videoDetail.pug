@@ -20,5 +20,8 @@ block content
           input(type="text", placeholder="Add a comment")
       ul.video__comments-list
         each comment in video.comments
-          li.comment
-            span= comment.text
+          li.comment(data-id=comment._id)
+            span.comment__content
+              span= comment.text
+              if loggedUser && comment.creator.id === loggedUser.id
+                i.fas.fa-times.comment__delete

@@ -1,21 +1,21 @@
 mixin videoPlayer(video)
   if video
     .videoPlayer#jsVideoPlayer
-      video(src=`/${video.fileUrl}`, preload, muted, autoplay)
+      video(src=video.fileUrl, preload)
       .videoPlayer__controls
         .videoPlayer__column.videoPlayer__volume-wrapper
           span.volume
-            i.fas.fa-volume-off
+            i.fas.fa-volume-up
           .videoPlayer__volume
             input.videoPlayer__volume___input(type="range", min="0", max="1" value="1" step="0.01")
             span.rangeTracker
           span.timeline
             span.timeline__current 00:00:00
             span /
-            span.timeline__total 00:10:00
+            span.timeline__total 00:00:00
         .videoPlayer__column
           span.play
-            i.fas.fa-pause
+            i.fas.fa-play
         .videoPlayer__column
           span.full-screen
             i.fas.fa-expand

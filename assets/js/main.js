@@ -8,4 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const comments = new CommentForm('jsComments');
   comments.init();
+
+  const closeMessageBtn = document.querySelectorAll('.flash-message__close');
+  closeMessageBtn.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.currentTarget.closest('.flash-message').remove();
+    });
+  });
 });

@@ -40,7 +40,17 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = async (req, res) => {
-  const { body: { title, description }, file: { path }, user: { id: creator } } = req;
+  const { body: { title, description }, user: { id: creator } } = req;
+
+  let { file: { path } } = req;
+  if (!path) {
+    path = req.file.location;
+  } else {
+    path = `/${path}`;
+  }
+  if (!path) {
+    res.status(400).render('upload', { pageTitle: 'Upload' });
+  }
 
   try {
     const newVideo = await Video.create({
@@ -67,6 +77,7 @@ export const videoDetail = async (req, res) => {
       .populate({
         path: 'comments',
         options: { sort: { createdAt: -1 } },
+        populate: 'creator',
       });
     if (!video) {
       throw new Error('Video not found');
@@ -182,11 +193,47 @@ export const postAddComment = async (req, res) => {
     }
     video.comments.push(newComment._id);
     video.save();
-    res.status(200);
+    res.status(200).json({ id: newComment._id });
   } catch (e) {
     console.error(e);
     res.status(400);
   } finally {
     res.end();
   }
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: {
+      id: videoId,
+      commentId,
+    },
+    user: { id: userId },
+  } = req;
+  try {
+    const video = await Video.findOne({
+      _id: videoId,
+      comments: commentId,
+    });
+    if (!video) {
+      throw new Error('Video not found');
+    }
+    const deletedComment = await Comment.findOneAndRemove({
+      _id: commentId,
+      creator: userId,
+    });
+    if (deletedComment) {
+      video.comments.splice(video.comments.indexOf(commentId), 1);
+      video.save();
+      res.status(200);
+    } else {
+      res.status(400);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(400);
+  } finally {
+    res.end();
+  }
+  res.status(200).end();
 };

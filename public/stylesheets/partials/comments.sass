@@ -1,11 +1,24 @@
+.add__comment
+  text-align: center
+
 .video__comments-list
   +margin(2rem 0 0 0)
   li
     +margin(1rem 0)
-    background-color: $blue
-    color: white
-    +padding(1rem 1.5rem)
-    +border-radius(20px)
-    border-bottom-left-radius: 0
+    .comment__content
+      position: relative
+      display: inline-block
+      background-color: $blue
+      color: white
+      +padding(1rem 1.5rem)
+      +border-radius(20px)
+      border-bottom-left-radius: 0
     &:not(:last-child)
       +margin(0 0 1rem 0)
+    .comment__delete
+      position: absolute
+      right: -1.5rem
+      color: $red
+      cursor: pointer
+      font-size: 1.25rem
+      top: .5rem
